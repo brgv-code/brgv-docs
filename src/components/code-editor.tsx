@@ -48,9 +48,10 @@ const CodeEditor: React.FC<CodeEditorProps> = ({initialValue, onChange}) => {
         editorRef.current.setValue(formatted);
     }
     return (
-        <div className=' relative group'> <button className='btn btn-accent absolute top-1 right-1 z-20 opacity-0 transition-opacity group-hover:opacity-100' onClick={onFormatClick}>Format</button>
+        <div className=' relative group  h-full w-[calc(100%-10px)]'> 
+        <button className='btn btn-accent absolute top-1 right-1 z-20 opacity-0 transition-opacity group-hover:opacity-100' onClick={onFormatClick}>Format</button>
         <Editor
-            height="500px"
+            height= '100%'
             language="javascript"
             theme='hc-black'
             value={initialValue}
