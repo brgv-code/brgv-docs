@@ -51,13 +51,6 @@ if (direction === 'horizontal') {
         height: 500,
         width: Infinity,
         resizeHandles: ['s'],
-        // onResizeStop: (event, data) => {
-        //     const height = data.size.height;
-
-
-
-        //     setColumnWidth(width);
-        // }
     }
 }
 

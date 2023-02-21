@@ -3,11 +3,21 @@ import CodeEditor from "./code-editor";
 import Preview from "./preview";
 import bundle from '../bundler';
 import Resizable from "./resizable";
-function CodeCell() {
+import { Cell } from "../state";
+import { useActions } from "../hooks/use-actions";
+
+interface CodeCellProps {
+     cell: Cell;
+}
+
+
+function CodeCell({cell}: CodeCellProps) {
   // const ref = useRef<any>(); // ref gives us reference to any js element not only components
-const [text, setText] = useState('');
 const [code, setCode] = useState('');
 const [err, setErr] = useState('');
+
+const { updateCell } = useActions();
+
 // const startService = async () => {
 //   ref.current = 
 // }
@@ -18,14 +28,14 @@ const [err, setErr] = useState('');
 // FEATURE: debouncing for bundling code after 0.75s of user input 
 useEffect(() => {
     const timer = setTimeout(async () => {
-        const output = await bundle(text)
+        const output = await bundle(cell.content)
         setCode(output.code);
         setCode(output.err);
     }, 500);
     return () => {
         clearTimeout(timer);
     }
-}, [text]);
+}, [cell.content]);
 
 // const onClick = async () => {
 //   const output = await bundle(text)
@@ -53,7 +63,7 @@ useEffect(() => {
     <Resizable direction="vertical">
     <div className="h-full flex flex-row">
         <Resizable direction="horizontal">
-      <CodeEditor initialValue="const a=1;" onChange={(value) => setText(value)}/>
+      <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)}/>
       </Resizable>
       {/* <textarea
       value={text}
@@ -63,7 +73,7 @@ useEffect(() => {
       </div> */}
       {/* <pre>{code}</pre> */}
 <Preview  code={code} err={err}/>    </div>
-    </Resizable>
+     </Resizable>
 
   );
 }
