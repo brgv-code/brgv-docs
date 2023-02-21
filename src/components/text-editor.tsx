@@ -1,8 +1,8 @@
 import MDEditor  from "@uiw/react-md-editor"
 import { useState, useEffect, useRef } from "react";
-import '../styles/text-editor.css';
 import { Cell } from '../state';
 import { useActions } from '../hooks/use-actions';
+import '../styles/text-editor.css';
 interface TextEditorProps {
     cell: Cell;
 }
@@ -43,9 +43,9 @@ function TextEditor( {cell}: TextEditorProps) {
 // react markdown editor onclick shows the editor and onblur shows the markdown
 
     return (
-        <div className="text-editor card" onClick={() => setEditMode(true)}>
-            <div className="card-content">
-            <MDEditor.Markdown source={cell?.content} style={{ whiteSpace: 'pre-wrap' }} /></div>
+        <div className="text-editor card bg-slate-700" onClick={() => setEditMode(true)}>
+            <div className="card-body">
+            <MDEditor.Markdown className=" card-title" source={cell?.content || 'Click to Edit'} style={{ whiteSpace: 'pre-wrap' }} /></div>
         </div>
     );
 }
