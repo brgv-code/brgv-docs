@@ -1,4 +1,3 @@
-import { InsertCellBeforeAction } from "./../actions/index";
 import { ActionType } from "../action-types";
 import {
   Action,
@@ -38,18 +37,6 @@ export const insertCellAfter = (
 ): InsertCellAfterAction => {
   return {
     type: ActionType.INSERT_CELL_AFTER,
-    payload: {
-      id,
-      type,
-    },
-  };
-};
-export const insertCellBefore = (
-  id: string | null,
-  type: CellType
-): InsertCellBeforeAction => {
-  return {
-    type: ActionType.INSERT_CELL_BEFORE,
     payload: {
       id,
       type,

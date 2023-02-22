@@ -61,7 +61,7 @@ useEffect(() => {
 
   return (
     <Resizable direction="vertical">
-    <div className="h-full flex flex-row">
+    <div className="h-calc[100%-10px] flex flex-row">
         <Resizable direction="horizontal">
       <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)}/>
       </Resizable>

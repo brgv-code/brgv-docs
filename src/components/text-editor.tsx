@@ -43,9 +43,9 @@ function TextEditor( {cell}: TextEditorProps) {
 // react markdown editor onclick shows the editor and onblur shows the markdown
 
     return (
-        <div className="text-editor card bg-slate-700" onClick={() => setEditMode(true)}>
+        <div className="text-editor card " onClick={() => setEditMode(true)}>
             <div className="card-body">
-            <MDEditor.Markdown className=" card-title" source={cell?.content || 'Click to Edit'} style={{ whiteSpace: 'pre-wrap' }} /></div>
+            <MDEditor.Markdown className="p-10 bg-black border text-white" source={cell?.content || 'Click to Edit'} style={{ whiteSpace: 'pre-wrap' }} /></div>
         </div>
     );
 }

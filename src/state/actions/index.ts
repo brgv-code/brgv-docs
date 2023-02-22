@@ -17,13 +17,7 @@ export interface MoveCellAction {
     payload: string;
   }
   
-  export interface InsertCellBeforeAction {
-    type: ActionType.INSERT_CELL_BEFORE;
-    payload: {
-        id: string | null;
-        type: CellType;
-    };
-    }
+
     
   export interface InsertCellAfterAction {
     type: ActionType.INSERT_CELL_AFTER;
@@ -63,7 +57,6 @@ export interface MoveCellAction {
 export type Action =
     | MoveCellAction
     | DeleteCellAction
-    | InsertCellBeforeAction
     | InsertCellAfterAction
     | UpdateCellAction
     | BundleStartAction
