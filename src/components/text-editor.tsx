@@ -45,7 +45,7 @@ function TextEditor( {cell}: TextEditorProps) {
     return (
         <div className="text-editor card " onClick={() => setEditMode(true)}>
             <div className="card-body">
-            <MDEditor.Markdown className="p-10 bg-black border text-white" source={cell?.content || 'Click to Edit'} style={{ whiteSpace: 'pre-wrap' }} /></div>
+            <MDEditor.Markdown className="p-10 bg-[#0d1b2a] border text-white" source={cell?.content || 'Click to Edit'} style={{ whiteSpace: 'pre-wrap' }} /></div>
         </div>
     );
 }

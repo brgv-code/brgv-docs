@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import CodeEditor from "./code-editor";
 import Preview from "./preview";
-import bundle from '../bundler';
 import Resizable from "./resizable";
 import { Cell } from "../state";
 import { useActions } from "../hooks/use-actions";
+import { useTypedSelector } from "../hooks/use-type-selector";
 
 interface CodeCellProps {
      cell: Cell;
@@ -13,11 +13,11 @@ interface CodeCellProps {
 
 function CodeCell({cell}: CodeCellProps) {
   // const ref = useRef<any>(); // ref gives us reference to any js element not only components
-const [code, setCode] = useState('');
-const [err, setErr] = useState('');
+// const [code, setCode] = useState('');
+// const [err, setErr] = useState('');
 
-const { updateCell } = useActions();
-
+const { updateCell, createBundle } = useActions();
+const bundle = useTypedSelector((state) => state.bundles ? state.bundles[cell.id] : null);
 // const startService = async () => {
 //   ref.current = 
 // }
@@ -27,15 +27,24 @@ const { updateCell } = useActions();
 // }, []); // empty array means run only once
 // FEATURE: debouncing for bundling code after 0.75s of user input 
 useEffect(() => {
+
+
+    if(!bundle) {
+        createBundle(cell.id, cell.content);
+        return;
+    }
+
+
     const timer = setTimeout(async () => {
-        const output = await bundle(cell.content)
-        setCode(output.code);
-        setCode(output.err);
-    }, 500);
+        // const output = await bundle(cell.content)
+        // setCode(output.code);
+        // setCode(output.err);
+      createBundle(cell.id, cell.content);
+    }, 750);
     return () => {
         clearTimeout(timer);
     }
-}, [cell.content]);
+}, [cell.content, cell.id, createBundle]);
 
 // const onClick = async () => {
 //   const output = await bundle(text)
@@ -61,7 +70,7 @@ useEffect(() => {
 
   return (
     <Resizable direction="vertical">
-    <div className="h-calc[100%-10px] flex flex-row">
+    <div className="h-[calc(100%-10px)] flex flex-row">
         <Resizable direction="horizontal">
       <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)}/>
       </Resizable>
@@ -72,7 +81,15 @@ useEffect(() => {
         <button className="btn btn-primary m-4" onClick={onClick}>Submit</button>
       </div> */}
       {/* <pre>{code}</pre> */}
-<Preview  code={code} err={err}/>    </div>
+      {
+        !bundle || bundle.loading ? 
+        <div className=" progress-bar ">        <progress className="progress progress-secondary w-full"  max="100">Loading</progress></div>
+
+        :
+        <Preview  code={bundle.code} err={bundle.err}/>
+      }
+{/* {bundle && <Preview  code={bundle.code} err={bundle.err}/>    } */}
+</div> 
      </Resizable>
 
   );

@@ -10,6 +10,8 @@ import {
   Direction,
 } from "../actions";
 import { Cell, CellType } from "../cell";
+import { Dispatch } from "redux";
+import bundle from "../../bundler";
 
 export const moveCell = (
   id: string,
@@ -53,6 +55,28 @@ export const updateCell = (id: string, content: string): UpdateCellAction => {
     },
   };
 };
+
+export const createBundle = (cellId: string, input: string) => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.BUNDLE_START,
+      payload: {
+        cellId,
+      },
+    });
+
+    const result = await bundle(input);
+
+    dispatch({
+      type: ActionType.BUNDLE_COMPLETE,
+      payload: {
+        cellId,
+        bundle: result,
+      },
+    });
+  };
+};
+
 
 export const bundleStart = (cellId: string): BundleStartAction => {
   return {
